@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: test-service
+
+server:
+  port: 2222
+
+eureka:
+  server:
+    hostname: localhost
+    port: 8761
+    username: eastsea
+    password: 123456
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    registryFetchIntervalSeconds: 5
+    instanceInfoReplicationIntervalSeconds: 5
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    serviceUrl:
+      # 向服务中心注册服务
+      defaultZone: http://${eureka.server.username}:${eureka.server.password}@${eureka.server.hostname}:${eureka.server.port}/eureka
+#      defaultZone: http://eureka-server1:8762/eureka
+#      defaultZone: http://192.168.9.71:8761/eureka/
+      fetchRegistry: true
+      healthcheck:
+        enabled: true

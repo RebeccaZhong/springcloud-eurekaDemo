@@ -1,0 +1,45 @@
+server:
+  # 指定服务端口
+  port: 8761
+#  servlet:
+#    context-path: /eureka
+
+spring:
+  application:
+    name: eureka-server # 服务名称
+  security:
+    user:
+      name: eastsea #用户名
+      password: 123456 #密码
+
+info:
+  component: Discovery Server
+
+# 参考: https://blog.csdn.net/u011531425/article/details/81713441 , https://blog.csdn.net/xslde_com/article/details/81149185
+# 相关源码: EurekaClientConfig, EurekaClientConfigBean, EurekaConstants
+eureka:
+  # 指定主机名称
+  instance:
+#    hostname: eureka-server1
+    hostname: localhost
+  client: #server一定程度上也是client，互为client
+    registerWithEureka: false
+    fetchRegistry: false
+    # 假设指定region为江苏
+    region: js
+    availability-zones:
+      #假设江苏下面有南京的两个region
+#      js: nj2,nj1
+      js: nj2
+    service-url:
+#      nj1: http://eureka-server1:8761/eureka
+#      nj2: http://localhost:8761/eureka
+      nj2: http://${eureka.instance.hostname}:${server.port}/eureka
+#    serviceUrl:
+#      defaultZone:  http://localhost:8761/eureka
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    #关闭自我保护机制
+    enableSelfPreservation: false
+    #设置移除间隔时间
+    evictionIntervalTimerInMs: 2000

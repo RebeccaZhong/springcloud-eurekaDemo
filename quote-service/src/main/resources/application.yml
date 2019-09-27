@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: quote-service
+
+server:
+  port: 3334
+
+
+eureka:
+  server:
+    hostname: localhost
+    port: 8761
+    username: eureka
+    password: 123456
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    # 从eureka server获取注册信息的频率，默认为30秒，缩短配置时间可以缓解服务上线时间过长的问题
+    registryFetchIntervalSeconds: 5
+    instanceInfoReplicationIntervalSeconds: 5
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    serviceUrl:
+      # 向服务中心注册服务
+      defaultZone: http://${eureka.server.username}:${eureka.server.password}@${eureka.server.hostname}:${eureka.server.port}/eureka
+      # 客户端是否要从eureka server获取注册信息，默认为true
+      fetchRegistry: true
+      healthcheck:
+        enabled: true
